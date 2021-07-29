@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import clienteAxios from './config/axios';
@@ -30,20 +30,20 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route 
-          exact 
-          path = '/'
-          component = {Pacientes}
+        <Route
+          exact
+          path='/'
+          component={() => <Pacientes citas={citas} />}
         />
-        <Route 
-          exact 
-          path = '/nueva'
-          component = {NuevaCita}
+        <Route
+          exact
+          path='/nueva'
+          component={NuevaCita}
         />
-        <Route 
-          exact 
-          path = '/cita/:id'
-          component = {Cita}
+        <Route
+          exact
+          path='/cita/:id'
+          component={Cita}
         />
       </Switch>
     </Router>
