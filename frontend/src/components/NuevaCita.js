@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const NuevaCita = () => {
+import clienteAxios from '../config/axios';
+
+const NuevaCita = (props) => {
 
     // Genreando state como objeto
     const [cita, guardarCita] = useState({
@@ -21,6 +23,20 @@ const NuevaCita = () => {
         })
     }
 
+    // Enviando peticion a la API
+    const crearNuevaCita = e => {
+        e.preventDefault();
+
+        // Eviando peticion por axios
+        clienteAxios.post('/pacientes', cita)
+            .then(respuesta => {
+                console.log(respuesta.data)
+
+                // Redireccionndo
+                props.history.push('/');
+            })
+    }
+
     return (
         <Fragment>
             <h1 className="my-5">Crear nueva Cita</h1>
@@ -31,7 +47,9 @@ const NuevaCita = () => {
                     </div>
                 </div>
                 <div className="col-md-8 mx-auto">
-                    <form className="bg-white p-5 bordered">
+                    <form
+                        onSubmit={crearNuevaCita} 
+                        className="bg-white p-5 bordered">
                         <div className="form-group">
                             <label htmlFor="nombre">Nombre Mascota</label>
                             <input
@@ -52,6 +70,7 @@ const NuevaCita = () => {
                                 id="propietario"
                                 name="propietario"
                                 placeholder="Nombre Propietario"
+                                onChange={actualizarState}
                             />
                         </div>
 
@@ -63,6 +82,7 @@ const NuevaCita = () => {
                                 id="telefono"
                                 name="telefono"
                                 placeholder="Teléfono"
+                                onChange={actualizarState}
                             />
                         </div>
 
@@ -73,6 +93,7 @@ const NuevaCita = () => {
                                 className="form-control form-control-lg"
                                 id="fecha"
                                 name="fecha"
+                                onChange={actualizarState}
                             />
                         </div>
 
@@ -83,6 +104,7 @@ const NuevaCita = () => {
                                 className="form-control form-control-lg"
                                 id="hora"
                                 name="hora"
+                                onChange={actualizarState}
                             />
                         </div>
 
@@ -92,6 +114,7 @@ const NuevaCita = () => {
                                 className="form-control"
                                 name="sintomas"
                                 rows="6"
+                                onChange={actualizarState}
                             ></textarea>
                         </div>
 
