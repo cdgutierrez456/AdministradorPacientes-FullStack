@@ -51,10 +51,10 @@ function App() {
           path='/cita/:id'
           render={(props) => {
             const cita = citas.filter(cita => cita._id === props.match.params.id);
-
+            
             return (
               <Cita 
-                cita={cita}
+                cita={cita[0]}
               />
             )
           }}
