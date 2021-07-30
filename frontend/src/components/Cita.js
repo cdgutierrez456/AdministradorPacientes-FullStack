@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import clienteAxios from '../config/axios';
+import Swal from 'sweetalert2';
 
 const Cita = (props) => {
 
@@ -10,19 +11,39 @@ const Cita = (props) => {
     }
 
     // Extraer props
-    const {cita: {_id, nombre, propietario, fecha, hora, telefono, sintomas}} = props;
+    const { cita: { _id, nombre, propietario, fecha, hora, telefono, sintomas } } = props;
 
     // Eliminar un registro
     const eliminarCita = id => {
-        clienteAxios.delete(`/pacientes/${id}`)
-            .then(respuesta => {
-                props.guardarConsulta(true)
-                props.history.push('/');
-            })
-            .catch(error => {
-                console.log(error);
-            })
 
+        Swal.fire({
+            title: '¿Eliminar?',
+            text: "Ya no habra marcha atras",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, seguro',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+
+                // Eliminando de la base de datos
+                clienteAxios.delete(`/pacientes/${id}`)
+                    .then(respuesta => {
+                        props.guardarConsulta(true)
+                        props.history.push('/');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        })
     }
     return (
         <Fragment>
@@ -49,8 +70,8 @@ const Cita = (props) => {
                                     <p>Telefono: {telefono}</p>
                                 </div>
                                 <div className="d-flex">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         className="text-uppercase py-2 px-5 font-weight-bold btn btn-danger col"
                                         onClick={() => eliminarCita(_id)}>
                                         Eliminar &times;
