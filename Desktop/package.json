@@ -1,0 +1,14 @@
+{
+  "name": "fullstackjs-electron",
+  "version": "1.0.0",
+  "description": "Aplicacion de escritorio con electron",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Cristian David Gutierrez",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.1.7"
+  }
+}
